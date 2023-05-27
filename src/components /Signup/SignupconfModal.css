@@ -1,0 +1,51 @@
+@keyframes fade {
+    0% {
+        opacity: 1;
+    }
+    70% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes check {
+    0% {
+        opacity: 0;
+    }
+    70% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.buttonload {
+    background-color: #04AA6D; /* Green background */
+    border: none; /* Remove borders */
+    color: white; /* White text */
+    padding: 12px 16px; /* Some padding */
+    font-size: 16px; /* Set a font size */
+    display: block;
+    margin-left: 38%;
+    animation-name: fade;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+    position: relative;
+}
+
+.buttonload::after {
+    content: "all good"; /* Check mark icon */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    animation-name: check;
+    animation-duration: 0.5s;
+    animation-delay: 2s;
+    animation-fill-mode: forwards;
+}
+
