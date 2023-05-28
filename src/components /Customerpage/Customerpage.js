@@ -12,6 +12,8 @@ import { useState } from 'react';
 import Reqcard from '../Reqcard/Reqcard'
 
 import AddCustomerTicket from '../AddCustomerTicket/AddCustomerTicket';
+import "bootstrap/dist/css/bootstrap.min.css"
+
 
 function Customerpage(props) {
 let customerData = props.customerData;
@@ -47,7 +49,9 @@ function refreshdata(){
 };
 
 
-useEffect(() => {customerTikets()},[customerTickets]);
+useEffect(() => {
+  customerTikets()
+},[]);
 
 
 
@@ -55,11 +59,11 @@ useEffect(() => {customerTikets()},[customerTickets]);
     <>
     <Navigationbar/>
       <div className='Allcontainer'>
-        <Sidebar customerData={customerData}/>
+        {/* <Sidebar customerData={customerData}/> */}
         <div style={{height:'85vh',width:'100%'}} >
-          <div className='allRequests' style={{ display: 'flex', flexDirection: 'column', overflow: 'scroll', height: '75vh',width:'100%' }}>
+          <div className='allRequests' style={{ display: 'flex', flexDirection: 'column', overflow: 'scroll', height: '75vh',width:'60%',marginLeft:'18%' }}>
             <div className='requestAndButton'>
-              <h3 style={{textAlign:'center',marginLeft:'8%'}}>all requiests</h3>
+              <h3 style={{textAlign:'center',marginLeft:'8%'}}></h3>
               <hr />
               {customerTickets.map( (item, index) => {
                 return(
@@ -70,12 +74,14 @@ useEffect(() => {customerTikets()},[customerTickets]);
 
             </div>
           </div>
-          <Button className='createButtonTicket' variant="primary" onClick={handleshow}>submit a request</Button>
+          <Button className='createButtonTicket' variant="warning" onClick={handleshow}>submit a request</Button>
         </div>
-        <AddCustomerTicket show={show} hide={handleshow} customerData={customerData} refreshTicketsList={refreshdata}/>
         
       </div>
+      <div>
       <Footer/>
+      </div>
+        <AddCustomerTicket show={show} hide={handleshow} customerData={customerData} refreshTicketsList={refreshdata}/>
     </>
   )
 }

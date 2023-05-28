@@ -15,56 +15,50 @@ function App() {
   let [customerVarified, setcustomerVarified] = useState(false);
   let [customerData, setcustomerData] = useState([]);
   let handleLogin = (customerObject, formEmail) => {
-    // console.log(customerObject);
-    // console.log(formEmail);
     setcustomerData(customerObject);
-
-    // console.log(customerObject[0].cemail === formEmail);
     if (customerObject[0].cemail === formEmail) {
       setcustomerVarified(true);
     };
   }
-  // console.log(customerData);
+  
   // ________________________________________________________________________________________________
 
 
 
-  const { user, isAuthenticated } = useAuth0();
+  // const { user, isAuthenticated } = useAuth0();
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      // http://localhost:3001/getcustomerbyemail?email=alamrimohammad959@gmail.com
-      console.log('this is the user', user);
-      axios.get(`${process.env.REACT_APP_SERVER_URL}/getcustomerbyemail?email=${user.email}`)
-        .then(response => {
-          console.log('this is the response', response.data);
-          if (response.data.length > 0) {
-            setcustomerData(response.data);
-            setcustomerVarified(true);
-          }else{
-            alert('you are not registered,please sign up');
-          }
-        })
-        .catch(error => {
-          console.log('this is the error', error);
-        })
-    };
-  }, [isAuthenticated]);
-
-  console.log('this is the customerData from auth', customerData);
-
+  // useEffect(() => {
+  //   if (isAuthenticated) {
+  //     // http://localhost:3001/getcustomerbyemail?email=alamrimohammad959@gmail.com
+  //     console.log('this is the user', user);
+  //     axios.get(`${process.env.REACT_APP_SERVER_URL}/getcustomerbyemail?email=${user.email}`)
+  //       .then(response => {
+  //         console.log('this is the response', response.data);
+  //         if (response.data.length > 0) {
+  //           setcustomerData(response.data);
+  //           setcustomerVarified(true);
+  //         }else{
+  //           alert('you are not registered,please sign up');
+  //         }
+  //       })
+  //       .catch(error => {
+  //         console.log('this is the error', error);
+  //       })
+  //   };
+  // }, [isAuthenticated]);
+  function checkAuth( item){
+    setcustomerData(item);
+    setcustomerVarified(true);
+  }
+  // ________________________________________________________________________________________________
   return (
 
     <div className="App">
-      {/* <Navigationbar /> */}
       <Routes>
-        {!customerVarified && <Route path="/" element={<Customerlogin passing={handleLogin} />} />}
-        {/* <Route path="/" element={<Customerlogin passing={handleLogin} />} /> */}
+        {!customerVarified && <Route path="/" element={<Customerlogin passing={handleLogin} checkAuth={checkAuth} />} />}
         <Route path="/Customersignup" element={<Customersignup />} />
       </Routes>
       {customerVarified && <Customerpage customerData={customerData} />}
-      {console.log('this is the customerDATA', customerData)}
-
 
     </div>
 

@@ -22,7 +22,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 function Customerlogin(props) {
     let [customerData, setcustomerData] = useState({}); // this is the data that we get from the server
     let [formEmail, setformEmail] = useState('');
-    
+
     let varifyUser = (e) => {
         e.preventDefault();
         function Customer(email, password) {
@@ -39,34 +39,58 @@ function Customerlogin(props) {
         // console.log('this is the object', varifycustomer);
         let varify = () => {
             axios.post(`${process.env.REACT_APP_SERVER_URL}/costmerValidationLogIn`, varifycustomer)
-            .then(response => {
-                // setcustomerData(response.data);
-                props.passing(response.data, email)
-                // console.log('this is the response', response.data);
-                if (response.data==="Invalid email or password"){
-                    alert('Invalid email or password');
-                }
-            })
-
-
-
-            // console.log('this is the response', response.data);
-            
+                .then(response => {
+                    setcustomerData(response.data);
+                    props.passing(response.data, email)
+                    // console.log('this is the response', response.data);
+                    if (response.data === "Invalid email or password") {
+                        alert('Invalid email or password');
+                    }
+                })
         }
         varify();
     }
+
     // useEffect(() => {
-    //     props.passing(customerData, formEmail);
-    // }, [customerData, formEmail]);
+
+    //     // varifyUser()
+
+    // }, [customerData]);
+
 
     // __________________________________________________________________________________________________
-    let {loginWithRedirect} = useAuth0();
+    let { loginWithRedirect} = useAuth0();
+    const { user, isAuthenticated } = useAuth0();
+
+
+    useEffect(() => {
+        if (isAuthenticated) {
+          // http://localhost:3001/getcustomerbyemail?email=alamrimohammad959@gmail.com
+          console.log('this is the user', user);
+          axios.get(`${process.env.REACT_APP_SERVER_URL}/getcustomerbyemail?email=${user.email}`)
+            .then(response => {
+              console.log('this is the response', response.data);
+              if (response.data.length > 0) {
+                // setcustomerData(response.data);
+                // setcustomerVarified(true);
+                props.checkAuth(response.data);
+
+              }else{
+                alert('you are not registered,please sign up');
+              }
+            })
+            .catch(error => {
+              console.log('this is the error', error);
+            })
+        };
+      }, [isAuthenticated]);
+
 
 
     return (
 
         <>
-            <MDBContainer className="my-5" style={{ backgroundColor: 'pink' }}>
+            <MDBContainer className="my-5" >
 
                 <MDBCard className="h-25">
                     <MDBRow className='g-0'>
@@ -113,6 +137,30 @@ function Customerlogin(props) {
 
 
         </>
+
+
+
+//  <>
+// <div className="background">
+//   <div className="shape" />
+//   <div className="shape" />
+// </div>
+// <form onSubmit={varifyUser}>
+//   <h3>Login Here</h3>
+//   <label htmlFor="username">Username</label>
+//   <input type="text" placeholder="Email or Phone" id="username" />
+//   <label htmlFor="password">Password</label>
+//   <input type="password" placeholder="Password" id="password" />
+//   <button className='logIn' type='submit' >Log In</button>
+//   <div className="social">
+//     <div className="go">
+//       <button className="fab fa-google" onClick={()=>loginWithRedirect()} /> Google
+//     </div>
+//   </div>
+// </form>
+// </> 
+
+
     );
 }
 export default Customerlogin;

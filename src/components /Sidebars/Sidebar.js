@@ -35,20 +35,20 @@ function Sidebar(props) {
                     },
                   ],
                 },
-                {
-                  title: 'Sort by',
-                  itemId: '/another',
-                  subNav: [
-                    {
-                      title: 'open',
-                      itemId: '/management/teams',
-                    },
-                    {
-                      title: 'closed',
-                      itemId: '/management/teams',
-                    }
-                  ],
-                },
+                // {
+                //   title: 'Sort by',
+                //   itemId: '/another',
+                //   subNav: [
+                //     {
+                //       title: 'open',
+                //       itemId: '/management/teams',
+                //     },
+                //     {
+                //       title: 'closed',
+                //       itemId: '/management/teams',
+                //     }
+                //   ],
+                // },
               ]}
             /> 
     </div> 
