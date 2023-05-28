@@ -30,23 +30,28 @@ function App() {
 
 
   const { user, isAuthenticated } = useAuth0();
-  
-  useEffect(() => {
-      if (isAuthenticated) {
-          // http://localhost:3001/getcustomerbyemail?email=alamrimohammad959@gmail.com
-          console.log('this is the user', user);
-          axios.get(`${process.env.REACT_APP_SERVER_URL}/getcustomerbyemail?email=${user.email}`)
-            .then(response => {
-              console.log('this is the response', response.data);
-              setcustomerData(response.data);
-              setcustomerVarified(true);
-            })
-            .catch(error => {
-              console.log('this is the error', error);
-            })};
-  },[isAuthenticated]);
 
-    console.log('this is the customerData from auth', customerData);
+  useEffect(() => {
+    if (isAuthenticated) {
+      // http://localhost:3001/getcustomerbyemail?email=alamrimohammad959@gmail.com
+      console.log('this is the user', user);
+      axios.get(`${process.env.REACT_APP_SERVER_URL}/getcustomerbyemail?email=${user.email}`)
+        .then(response => {
+          console.log('this is the response', response.data);
+          if (response.data.length > 0) {
+            setcustomerData(response.data);
+            setcustomerVarified(true);
+          }else{
+            alert('you are not registered,please sign up');
+          }
+        })
+        .catch(error => {
+          console.log('this is the error', error);
+        })
+    };
+  }, [isAuthenticated]);
+
+  console.log('this is the customerData from auth', customerData);
 
   return (
 

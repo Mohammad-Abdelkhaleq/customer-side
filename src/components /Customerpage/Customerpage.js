@@ -59,7 +59,7 @@ useEffect(() => {customerTikets()},[customerTickets]);
         <div style={{height:'85vh',width:'100%'}} >
           <div className='allRequests' style={{ display: 'flex', flexDirection: 'column', overflow: 'scroll', height: '75vh',width:'100%' }}>
             <div className='requestAndButton'>
-              <h3>all requiests</h3>
+              <h3 style={{textAlign:'center',marginLeft:'8%'}}>all requiests</h3>
               <hr />
               {customerTickets.map( (item, index) => {
                 return(
